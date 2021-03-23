@@ -7,6 +7,7 @@ import (
 	"io/ioutil"
 	"math"
 	"math/rand"
+	"strconv"
 )
 
 const ExcelSheetLocation = "/Users/johmagnu/Desktop/scripts/MarysvillePilchuckStudentSplit/MPHSClassSchedules.xlsx"
@@ -242,6 +243,15 @@ func saveClassDistribution(students []Student) {
 	if err != nil {
 		fmt.Printf("Error while writing class distribution to file: %v", err)
 	}
+
+	f := excelize.NewFile()
+	rowNum := 1
+	for class, size := range classDistribution.ClassesToSizeMap {
+		f.SetCellValue("Sheet1", "A" + strconv.Itoa(rowNum), class)
+		f.SetCellValue("Sheet1", "B" + strconv.Itoa(rowNum), size)
+		rowNum++
+	}
+	f.SaveAs("./ClassDistribution.xlsx")
 }
 
 func getRandomSplit(students []Student) ([]Student, []Student) {
@@ -273,7 +283,7 @@ func getStudentsFromExcelSheet() ([]Student, error) {
 			var classes []string
 			for _, col := range ColumnsWithClasses {
 				if len(row) > col && row[col] != "" {
-					classes = append(classes, row[col])
+					classes = append(classes, row[col]) // + "_" + strconv.Itoa((col - 4) / 2))
 				}
 			}
 			students = append(students, Student{
