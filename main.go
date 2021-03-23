@@ -10,7 +10,7 @@ import (
 	"strconv"
 )
 
-const ExcelSheetLocation = "/Users/johmagnu/Desktop/scripts/MarysvillePilchuckStudentSplit/MPHSClassSchedules.xlsx"
+const ExcelSheetLocation = "./MPHSClassSchedules.xlsx"
 const SheetName = "Sheet1"
 const MaxIterationsFromRandomStartingPoint = 500
 const MaxStartingPoints = 2000
